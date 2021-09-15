@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/customerList"
+        android:name="com.jcclover.jcel.customerlist.CustomerList"
+        android:label="fragment_customer_list"
+        tools:layout="@layout/fragment_customer_list" >
+        <action
+            android:id="@+id/action_customerList_to_customerDetail"
+            app:destination="@id/customerDetail2" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerDetail2"
+        android:name="com.jcclover.jcel.customerdetail.CustomerDetail"
+        android:label="fragment_customer_detail"
+        tools:layout="@layout/fragment_customer_detail" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.jcclover.jcel.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_customerList"
+            app:destination="@id/customerList" />
+        <action
+            android:id="@+id/action_homeFragment_to_customerDetail2"
+            app:destination="@id/customerDetail2" />
+    </fragment>
+</navigation>

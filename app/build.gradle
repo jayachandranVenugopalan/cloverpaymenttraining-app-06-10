@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+apply plugin: 'kotlin-kapt'
+apply plugin:'androidx.navigation.safeargs.kotlin'
+
+android {
+    compileSdk 31
+dataBinding{
+    enabled = true
+
+}
+    defaultConfig {
+       applicationId "com.example.clover"
+
+       buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.Z70ZEZC3A2ABR\""
+       // buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
+// applicationId "com.jcclover"
+        minSdk 17
+ // buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.X4D76ZZGBX43A\""
+        targetSdk 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs{
+        release{
+            storeFile file(keystore_file)
+            storePassword keystore_password
+            keyAlias key_alias
+            keyPassword key_password
+            enableV1Signing true // Clover app APKs must use V1 signing (JAR signing)
+            enableV2Signing false // prevents APKs from being signed with V2 scheme
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+
+    //meterial design
+    implementation "com.google.android.material:material:1.1.0-alpha02"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    kapt 'com.android.databinding:compiler:3.1.4'
+
+    implementation 'com.shuhart.stickyheader:stickyheader:1.0.5'
+//    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    // clover SDK
+    implementation 'com.clover.sdk:clover-android-sdk:262.2'
+    implementation 'com.clover.sdk:clover-android-connector-sdk:262.2'
+
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    //Nav Component
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    // Rx Dependencies
+    implementation "io.reactivex.rxjava2:rxjava:2.1.16"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+
+    // multidex
+    implementation 'com.android.support:multidex:1.0.3'
+
+}

@@ -1,5 +1,6 @@
 package com.jcclover.jcel.customerlist
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,11 +44,15 @@ class CustomerListAdaptor(var paymentDetailsList:ArrayList<PaymentOrder>): Recyc
             Log.d("msg","clicked position ${isExpandable}")
             holder.expandableLayout.setVisibility(when(isExpandable){true->View.VISIBLE
                 false->View.GONE })
+//        holder.btn_Details.setVisibility(when(holder.paymentStaus.text){"Paid"->View.GONE
+////            else -> View.VISIBLE
+//        })
         }
     }
     override fun getItemCount(): Int {
         return paymentDetailsList.size
     }
+
     class InvoiceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var customerName:TextView=view.findViewById(R.id.customer_name)
        var customerId:TextView=view.findViewById(R.id.cus_id)
@@ -59,11 +64,17 @@ class CustomerListAdaptor(var paymentDetailsList:ArrayList<PaymentOrder>): Recyc
         var linearLayout:LinearLayout=view.findViewById(R.id.linear_layout)
         fun setName( service:Any,listener: OnServiceClickListner?,position: Int) {
             customerName.text=(service as PaymentOrder).customerName
-        btn_Details.setOnClickListener {
-            Log.d("msg","button is clicked")
 
+if(paymentStaus.text=="Paid"||paymentStaus.text=="paid"){
+    btn_Details.visibility=View.INVISIBLE
+    paymentStaus.setTextColor(Color.parseColor("#4CAF50"))
 
-
+} else {
+    paymentStaus.setTextColor(Color.parseColor("#E1AF1B"))
+    btn_Details.visibility = View.VISIBLE
+    Log.d("msg", "button is clicked")
+}
+            btn_Details.setOnClickListener {
             listener?.onServiceClicked(service,position)
         }
         }
@@ -73,4 +84,6 @@ class CustomerListAdaptor(var paymentDetailsList:ArrayList<PaymentOrder>): Recyc
     fun setonClickListner(listener:OnServiceClickListner){
         onClickListner = listener
     }
+
+
 }

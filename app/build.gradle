@@ -12,13 +12,13 @@ dataBinding{
 
 }
     defaultConfig {
-       applicationId "com.example.clover"
-
-       buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.Z70ZEZC3A2ABR\""
+//       applicationId "com.example.clover"
+//       buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.Z70ZEZC3A2ABR\""
        // buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
-// applicationId "com.jcclover"
+ applicationId "com.jcclover.jcelclover"
+        buildConfigField "String", "RAID", "\"V0NDV46RZ22FY.M06R79FEPM0NW\""
         minSdk 17
- // buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.X4D76ZZGBX43A\""
+
         targetSdk 25
         versionCode 1
         versionName "1.0"

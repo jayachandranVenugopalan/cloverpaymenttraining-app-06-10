@@ -6,15 +6,15 @@
     tools:context=".jcel.HomeFragment">
     <fragment
         android:name="com.jcclover.jcel.customerlist.CustomerList"
-        android:layout_width="477dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/cointainer_1"/>
-    <fragment
-        android:name="com.jcclover.jcel.customerdetail.CustomerDetail"
-        android:layout_width="477dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/cointainer_2"/>
+<!--    <fragment-->
+<!--        android:name="com.jcclover.jcel.customerdetail.CustomerDetail"-->
+<!--        android:layout_width="477dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:id="@+id/cointainer_2"/>-->
 
 </LinearLayout>

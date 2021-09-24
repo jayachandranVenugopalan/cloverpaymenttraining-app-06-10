@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".jcel.LoginFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+  <TextView
+         android:background="#008577"
+      android:textColor="#ffff"
+      android:textSize="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your Username"
+        android:layout_marginLeft="40dp"
+    />
+
+    <TextView
+        android:textColor="#ffff"
+        android:background="#008577"
+        android:textSize="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+    />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"
+        android:layout_marginLeft="40dp"
+        android:inputType="textPassword"
+       />
+
+<Button
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:id="@+id/Submit_Btn"
+    android:layout_marginTop="30dp"
+    android:layout_width="300dp"
+    android:textSize="18dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="40dp"
+    android:text="Login">
+
+</Button>
+
+
+</LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_card_details.xml" value="0.17656765676567657" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_detail.xml" value="0.22" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_list.xml" value="0.1" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/row.xml" value="0.2489451476793249" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_login.xml" value="0.1921875" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/row.xml" value="0.33" />
       </map>
     </option>
   </component>

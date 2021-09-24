@@ -3,22 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/customerList"
         android:name="com.jcclover.jcel.customerlist.CustomerList"
         android:label="fragment_customer_list"
-        tools:layout="@layout/fragment_customer_list" >
-        <action
-            android:id="@+id/action_customerList_to_customerDetail"
-            app:destination="@id/customerDetail2" />
-    </fragment>
-    <fragment
-        android:id="@+id/customerDetail2"
-        android:name="com.jcclover.jcel.customerdetail.CustomerDetail"
-        android:label="fragment_customer_detail"
-        tools:layout="@layout/fragment_customer_detail" />
+        tools:layout="@layout/fragment_customer_list" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jcclover.jcel.HomeFragment"
@@ -27,8 +18,26 @@
         <action
             android:id="@+id/action_homeFragment_to_customerList"
             app:destination="@id/customerList" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jcclover.jcel.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_homeFragment_to_customerDetail2"
-            app:destination="@id/customerDetail2" />
+            android:id="@+id/action_loginFragment_to_customerList"
+            app:destination="@id/customerList" />
+        <action
+            android:id="@+id/action_loginFragment_to_customerCardDetails"
+            app:destination="@id/customerCardDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerCardDetails"
+        android:name="com.jcclover.jcel.customercarddetails.CustomerCardDetails"
+        android:label="fragment_customer_card_details"
+        tools:layout="@layout/fragment_customer_card_details" >
+        <action
+            android:id="@+id/action_customerCardDetails_to_customerList"
+            app:destination="@id/customerList" />
     </fragment>
 </navigation>

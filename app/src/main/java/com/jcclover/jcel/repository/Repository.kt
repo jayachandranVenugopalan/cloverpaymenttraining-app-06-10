@@ -3,7 +3,6 @@ package com.jcclover.jcel.repository
 import com.jcclover.jcel.modelclass.*
 import com.jcclover.jcel.network.ApiInstances
 import retrofit2.Response
-import retrofit2.http.POST
 
 class Repository {
 
@@ -17,18 +16,21 @@ class Repository {
         return ApiInstances.api.createCustomerDetails(cards)
     }
 
-    suspend fun getOwnID(mid:String):Response<OwnId>{
-        return ApiInstances.api.getOwnID(mid)
+    suspend fun tokenPay(number:String,exp_month:String,exp_year:String,cvv:String):Response<TokenResponse>{
+        return ApiInstances.api.tokenPay(number, exp_month, exp_year, cvv)
     }
 
     suspend fun createPayment(mid:String):Response<PaymentResponse>{
         return ApiInstances.api.createPayment(mid)
     }
 
-    suspend fun pakmsApiKey():Response<Post>{
-        return ApiInstances.api.PakmsApiKEY()
+    suspend fun createCharge(charge:Charges):Response<OrderDetails>{
+        return ApiInstances.api2.createCharge(charge)
     }
 
+    suspend fun paymentToken(apikey:String,card: CardInfo):Response<TokenResponse>{
+        return ApiInstances.api.paymentToken(card, apikey)
+    }
 //    suspend fun getPostdemo():Response<Post>{
 //        return ApiInstances.api.getpostdemo()
 //    }

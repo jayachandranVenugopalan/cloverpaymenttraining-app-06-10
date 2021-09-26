@@ -19,13 +19,24 @@ interface ApiStories {
         @Path ("postnumber")postnumber:String
     ):Response<Merchent>
 
+    @POST("v1/tokens")
+    suspend fun paymentToken(
+        @Body card: CardInfo,
+        @Header("apikey") apikey:String
+    ):Response<TokenResponse>
 
+
+    @FormUrlEncoded
     @Headers("Accept:application/json",
-        "Authorization:Bearer 21b142cd-2562-e94e-2c72-860c74d56b37")
-    @GET("v3/merchants/{mID}/gateway")
-    suspend fun getOwnID(
-        @Path("mID") mId:String
-    ):Response<OwnId>
+        "Authorization:Bearer 21b142cd-2562-e94e-2c72-860c74d56b37",
+        "apikey: 378aeddd231988f9f6cd97db4a2b6b3d")
+    @POST("v1/tokens")
+    suspend fun tokenPay(
+        @Field("number") number:String,
+        @Field("exp_month") exp_month:String,
+        @Field("exp_year") exp_year:String,
+        @Field("cvv") cvv:String
+    ):Response<TokenResponse>
 
     @Headers("Accept:application/json",
         "Authorization:Bearer 21b142cd-2562-e94e-2c72-860c74d56b37")
@@ -43,8 +54,11 @@ interface ApiStories {
 
     @Headers("Accept:application/json",
         "Authorization:Bearer 21b142cd-2562-e94e-2c72-860c74d56b37")
-@POST("pakms/apikey")
-    suspend fun PakmsApiKEY():Response<Post>
+      @POST("v1/charges")
+    suspend fun createCharge(
+        @Body charge:Charges
+    ):Response<OrderDetails>
+
 
 
 //

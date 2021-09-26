@@ -10,15 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.jcclover.R
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModel
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModelFactory
+import com.jcclover.jcel.modelclass.CardDetails
+import com.jcclover.jcel.modelclass.CardInfo
+
+import com.jcclover.jcel.modelclass.Charges
 import com.jcclover.jcel.modelclass.cards
 import com.jcclover.jcel.repository.Repository
 import com.jcclover.jcel.util.Constant.Companion.CARDTYPE
@@ -62,12 +64,40 @@ class CustomerCardDetails : Fragment() {
             editor!!.putString(CARDTYPE,cardtype.text.toString())
             editor!!.apply()
             editor!!.commit()
+
+var card= CardInfo(CardDetails("5555","02","25","378282246310005"))
+            Log.d("paymentToken",card.toString())
+            viewModel.paymentToken("378aeddd231988f9f6cd97db4a2b6b3d", card)
+            viewModel.myPaymentToken.observe(requireActivity(), Observer { response->
+                if (response.isSuccessful){
+                    Log.d("paymentToken",response.body().toString())
+                }else{
+                    Log.d("paymenttokenfail",response.raw().toString())
+                }
+            })
+createChanges()
+
+
             createCustmerDetails( first6.text.toString(),last4.text.toString(),firstName.text.toString(),lastName.text.toString(),experiationDate.text.toString(),cardtype.text.toString())
           //  getMerchentOrders()
+            Navigation.findNavController(view)
+                .navigate(R.id.action_customerCardDetails_to_customerList)
         }
 
 
     }
+
+    private fun createChanges() {
+        viewModel.createChange(Charges("ecom",4500,"usd","clv_1TSTSRRfjXqJ5GnE3zzLbsmP"))
+        viewModel.mycreateCHangeResponsw.observe(requireActivity(), Observer { response->
+            if(response.isSuccessful){
+                Log.d("changes","${response.body().toString()}")
+            }else{
+                Log.d("changesfailure","${response.raw().toString()}")
+            }
+        })
+    }
+
     private fun getMerchentOrders() {
 
 //viewModel.getPost()
@@ -120,8 +150,7 @@ var cusid=response.body()?.id.toString()
                 editor!!.commit()
                sucess=true
 
-                Navigation.findNavController(requireActivity(),R.id.navhost)
-                    .navigate(R.id.action_customerCardDetails_to_customerList)
+
             }else{
                 Log.d("Responsed is failure", response.errorBody().toString())
                 Log.d("Responsed is failure", response.message().toString())

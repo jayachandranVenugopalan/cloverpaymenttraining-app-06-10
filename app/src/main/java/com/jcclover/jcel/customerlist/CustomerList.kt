@@ -36,11 +36,20 @@ import com.jcclover.jcel.event.RxBus1
 import com.jcclover.jcel.event.RxEvent
 import com.jcclover.jcel.modelclass.*
 import com.jcclover.jcel.repository.Repository
+import com.jcclover.jcel.util.Constant.Companion.APIKEY
 import com.jcclover.jcel.util.Constant.Companion.CARDTYPE
 import com.jcclover.jcel.util.Constant.Companion.CUSTOMERID
 import com.jcclover.jcel.util.Constant.Companion.LAST4
 import com.jcclover.jcel.util.Constant.Companion.MERCHANTID
+import com.jcclover.jcel.util.Constant.Companion.PAYMENTTOKEN_URL
 import kotlinx.coroutines.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+
+import okhttp3.OkHttpClient
+
+
+
 
 
 class CustomerList : Fragment(),OnServiceClickListner {
@@ -68,7 +77,7 @@ class CustomerList : Fragment(),OnServiceClickListner {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         sharedpreferences=requireActivity().getSharedPreferences("mylab", Context.MODE_PRIVATE)
         getCloverAccount()
@@ -109,15 +118,11 @@ class CustomerList : Fragment(),OnServiceClickListner {
             adaptor.notifyDataSetChanged()
         }
 
-        viewModel.pakmsApiKey()
-        viewModel.myReponse1.observe(requireActivity(), Observer {
-            response->
-            if (response.isSuccessful){
-                Log.d("Apikey", response.raw().toString())
-            }else{
-                Log.d("Apikey failure",response.raw().toString())
-            }
-        })
+
+
+
+
+
 
       // getMerchentOrders()
 getOwnID()
@@ -126,12 +131,12 @@ getOwnID()
 
 
     private fun getOwnID() {
-        viewModel.getOwnID(MERCHANTID)
+        viewModel.tokenPAy("378282246310005","02","25","5555")
         viewModel.myOwnidResponse.observe(requireActivity(), Observer {
             response->
             if (response.isSuccessful){
                 Log.d("Responsed is sucess", response.body().toString())
-                Log.d("Responsed is sucess", response.body()?.mid.toString())
+                Log.d("Responsed is sucess", response.body().toString())
                 Log.d("Responsed is sucess", response.headers().toString())
             }else{
                 Log.d("Responsed is failure", response.errorBody().toString())

@@ -59,3 +59,35 @@ data class OwnId(
 data class PaymentResponse(
    var message:String
 )
+
+
+
+data class Charges(
+    var ecomind:String,
+    var amount: Int,
+    var currency:String,
+    var source:String
+
+)
+data class TokenResponse(
+    var id: String,
+    var `object` : String,
+    var card:Tokencard
+)
+data class Tokencard(
+    var exp_month:String,
+var exp_year:String,
+ var first6: String,
+var last4: String,
+var brand: String
+)
+
+data class OrderDetails(
+    var id:String,
+    var amount:String,
+    var amount_refunded:String,
+    var currency:String, var created:String, var captured:Boolean,
+    var ref_num:String,
+    var auth_code:String,
+
+)

@@ -9,8 +9,9 @@ class MyInterceptor: Interceptor {
 
         var request:Request=chain.request()
             .newBuilder()
-            .addHeader("Content-Type","application/json")
-            .addHeader("Authorization:","168415368431")
+            .addHeader("Accept", "application/json")
+            .addHeader("apikey", "9600840a1133c8100f76543237f48ef8")
+            .addHeader("Content-Type", "application/json")
             .build()
         return chain.proceed(request)
     }

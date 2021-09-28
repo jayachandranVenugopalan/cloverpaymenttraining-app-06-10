@@ -6,30 +6,10 @@ data class InvoiceDeatils(var amount:String,var paymentStatus: String,var messag
 
 
 //RestApi 1
-data class Post(
 
 
-    var userId:Int,
-    var id:Int,
-    var title:String,
-    var body:String
-
-)
-
-data class Merchent(
-
-    var href:String,
-    var id:String,
-    var name:String
-)
-
-data class GetOrders(
 
 
-   // var object :String
-var url:String
-
-)
 
 
 data class cards(
@@ -72,7 +52,8 @@ data class Charges(
 data class TokenResponse(
     var id: String,
     var `object` : String,
-    var card:Tokencard
+    var card:Tokencard,
+    var message: String
 )
 data class Tokencard(
     var exp_month:String,
@@ -90,4 +71,16 @@ data class OrderDetails(
     var ref_num:String,
     var auth_code:String,
 
+)
+
+
+data class ErrorResponse(
+    var message: String,
+    var error:Errortitle
+)
+
+data class Errortitle(
+    var type:String,
+    var code:String,
+    var message:String
 )

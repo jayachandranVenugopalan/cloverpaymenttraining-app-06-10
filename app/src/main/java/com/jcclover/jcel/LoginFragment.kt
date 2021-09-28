@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.jcclover.R
 
 
@@ -23,7 +24,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<Button>(R.id.Submit_Btn).setOnClickListener {
-Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_customerCardDetails)
+findNavController().navigate(R.id.action_loginFragment_to_customerList)
+//Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_customerList)
         }
     }
 }

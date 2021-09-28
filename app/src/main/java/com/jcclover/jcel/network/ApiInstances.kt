@@ -20,7 +20,7 @@ object ApiInstances  {
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://token-sandbox.dev.clover.com")
+            .baseUrl(PAYMENTTOKEN_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

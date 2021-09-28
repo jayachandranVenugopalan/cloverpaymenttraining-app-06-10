@@ -1,43 +1,45 @@
 package com.jcclover.jcel.repository
 
+import com.google.gson.Gson
+import com.jcclover.jcel.network.ApiResponse
+
 import com.jcclover.jcel.modelclass.*
 import com.jcclover.jcel.network.ApiInstances
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 class Repository {
 
-//    suspend fun getPost():Response<Merchent>{
-//        return ApiInstances.api.getPost()
-//    }
-    suspend fun getPost1(id:String):Response<Merchent>{
-        return ApiInstances.api.getPost1(id)
-    }
-    suspend fun createCustomerDetails(cards: cards):Response<CreateCustomerResponse>{
-        return ApiInstances.api.createCustomerDetails(cards)
-    }
-
-    suspend fun tokenPay(number:String,exp_month:String,exp_year:String,cvv:String):Response<TokenResponse>{
-        return ApiInstances.api.tokenPay(number, exp_month, exp_year, cvv)
-    }
-
-    suspend fun createPayment(mid:String):Response<PaymentResponse>{
-        return ApiInstances.api.createPayment(mid)
-    }
 
     suspend fun createCharge(charge:Charges):Response<OrderDetails>{
         return ApiInstances.api2.createCharge(charge)
     }
 
-    suspend fun paymentToken(apikey:String,card: CardInfo):Response<TokenResponse>{
-        return ApiInstances.api.paymentToken(card, apikey)
+    suspend fun paymentToken(apikey:String,card: CardInfo): ApiResponse<TokenResponse> {
+        return try {
+            val response=ApiInstances.api.paymentToken(card, apikey)
+            ApiResponse.Success(response)
+        }catch (e:HttpException){
+           var errormessage= errorMessagefromapi(e)
+         ApiResponse.CustomError(errormessage!!)
+        }
+
     }
-//    suspend fun getPostdemo():Response<Post>{
-//        return ApiInstances.api.getpostdemo()
-//    }
-//    suspend fun setPost( post: Post):Response<Post>{
-//        return ApiInstances.api.setPost(post)
-//    }
-//    suspend fun  getAllOrder():Response<GetOrders>{
-//        return ApiInstances.api.getAllOrder()
-//    }
+
+        private fun errorMessagefromapi(httpException: HttpException): String? {
+            var errorMessage: String? = null
+            val error = httpException.response()?.errorBody()
+            try {
+                val adapter = Gson().getAdapter(ErrorResponse::class.java)
+                val errorParser = adapter.fromJson(error?.string())
+                errorMessage = errorParser.error.message
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                return errorMessage
+            }
+        }
+
+
 }

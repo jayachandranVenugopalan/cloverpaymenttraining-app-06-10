@@ -9,15 +9,10 @@
         android:id="@+id/customerList"
         android:name="com.jcclover.jcel.customerlist.CustomerList"
         android:label="fragment_customer_list"
-        tools:layout="@layout/fragment_customer_list" />
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.jcclover.jcel.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_customer_list" >
         <action
-            android:id="@+id/action_homeFragment_to_customerList"
-            app:destination="@id/customerList" />
+            android:id="@+id/action_customerList_to_customerCardDetails"
+            app:destination="@id/customerCardDetails" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -27,9 +22,6 @@
         <action
             android:id="@+id/action_loginFragment_to_customerList"
             app:destination="@id/customerList" />
-        <action
-            android:id="@+id/action_loginFragment_to_customerCardDetails"
-            app:destination="@id/customerCardDetails" />
     </fragment>
     <fragment
         android:id="@+id/customerCardDetails"
@@ -38,6 +30,13 @@
         tools:layout="@layout/fragment_customer_card_details" >
         <action
             android:id="@+id/action_customerCardDetails_to_customerList"
-            app:destination="@id/customerList" />
+            app:destination="@id/customerList"
+            app:popUpTo="@id/customerList" />
+        <argument
+            android:name="amount"
+            app:argType="integer" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 </navigation>

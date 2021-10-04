@@ -11,4 +11,5 @@ class RxEvent {
     data class selecteddetails(var seletected: PaymentOrder,var position: Int)
     data class OrderId(var orderId:String,var amount:String,var position: Int)
     data class ResponseOrderId(var orderId:String,var amount:String,var position: Int)
+    data class PaymentToken(var token:String)
 }

@@ -26,7 +26,7 @@ object ApiInstances  {
     }
     private val paymentApiRetrofit by lazy{
         Retrofit.Builder()
-            .baseUrl(BASE_URl_ORDER)
+            .baseUrl("https://scl-sandbox.dev.clover.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -13,7 +13,7 @@ class MainViewModel(var repository: Repository): ViewModel() {
 
 
     val myPaymentToken:MutableLiveData<ApiResponse<TokenResponse>> = MutableLiveData()
-    val mycreateCHangeResponsw:MutableLiveData<Response<OrderDetails>> = MutableLiveData()
+    val mycreateCHangeResponsw:MutableLiveData<ApiResponse<OrderDetails>> = MutableLiveData()
 
     fun createChange(charge:Charges){
         viewModelScope.launch {

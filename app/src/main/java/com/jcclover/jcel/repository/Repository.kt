@@ -12,8 +12,14 @@ import java.io.IOException
 class Repository {
 
 
-    suspend fun createCharge(charge:Charges):Response<OrderDetails>{
-        return ApiInstances.api2.createCharge(charge)
+    suspend fun createCharge(charge:Charges):ApiResponse<OrderDetails>{
+        return try {
+            val response=ApiInstances.api2.createCharge(charge)
+            ApiResponse.Success(response)
+        }catch (e:HttpException){
+            var errormessage= errorMessagefromapi(e)
+            ApiResponse.CustomError(errormessage!!)
+        }
     }
 
     suspend fun paymentToken(apikey:String,card: CardInfo): ApiResponse<TokenResponse> {

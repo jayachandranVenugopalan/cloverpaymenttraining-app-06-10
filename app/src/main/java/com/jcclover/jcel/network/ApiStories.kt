@@ -21,5 +21,5 @@ interface ApiStories {
       @POST("v1/charges")
     suspend fun createCharge(
         @Body charge:Charges
-    ):Response<OrderDetails>
+    ):OrderDetails
 }

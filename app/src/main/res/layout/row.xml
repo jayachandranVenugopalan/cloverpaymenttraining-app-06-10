@@ -73,7 +73,7 @@
                 android:textColor="#000"/>
             <TextView
 
-                android:layout_marginLeft="500dp"
+                android:layout_marginLeft="400dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -85,7 +85,7 @@
                 android:id="@+id/invoice_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="650dp"
+                android:layout_marginLeft="550dp"
                 android:text="Invoice NO"
                 android:textColor="#000"
                 android:textSize="19dp" />

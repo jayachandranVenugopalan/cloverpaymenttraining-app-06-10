@@ -5,12 +5,13 @@
       <map>
         <entry key="..\:/Users/Jayachandran V/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.1" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_card_details.xml" value="0.33" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_card_details.xml" value="0.11794871794871795" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_detail.xml" value="0.22" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_list.xml" value="0.1" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_login.xml" value="0.1921875" />
-        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/row.xml" value="0.33" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/row.xml" value="0.25" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/webview.xml" value="0.1765625" />
       </map>
     </option>
   </component>

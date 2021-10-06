@@ -7,10 +7,8 @@ class Constant {
 
 
     companion object{
-      const  val BASE_URL="https://sandbox.dev.clover.com"
-const val BASE_URLAPIKEY= "https://apisandbox.dev.clover.com"
-        const  val BASE_URL1="https://jsonplaceholder.typicode.com"
 
+const val BASE_URL_WEBVIEW="http://192.168.0.107:8080/demo1/sample2.html"
        const val BASE_URl_ORDER="https://scl-sandbox.dev.clover.com"
         const val PAYMENTTOKEN_URL="https://token-sandbox.dev.clover.com"
         const val APIKEY="9600840a1133c8100f76543237f48ef8"

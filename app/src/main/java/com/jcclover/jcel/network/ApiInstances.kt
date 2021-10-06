@@ -1,7 +1,6 @@
 package com.jcclover.jcel.network
 
-import com.jcclover.jcel.util.Constant.Companion.BASE_URL
-import com.jcclover.jcel.util.Constant.Companion.BASE_URLAPIKEY
+
 import com.jcclover.jcel.util.Constant.Companion.BASE_URl_ORDER
 import com.jcclover.jcel.util.Constant.Companion.PAYMENTTOKEN_URL
 

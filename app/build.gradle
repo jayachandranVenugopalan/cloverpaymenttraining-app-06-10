@@ -15,8 +15,8 @@ dataBinding{
 //       applicationId "com.example.clover"
 //       buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.Z70ZEZC3A2ABR\""
        // buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
- applicationId "com.jcclover.jcelclover"
-        buildConfigField "String", "RAID", "\"V0NDV46RZ22FY.M06R79FEPM0NW\""
+  applicationId "com.jcclover"
+        buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
         minSdk 17
 
         targetSdk 25

@@ -24,6 +24,8 @@ import com.jcclover.jcel.event.RxEvent
 import com.jcclover.jcel.modelclass.*
 
 import com.jcclover.jcel.repository.Repository
+import com.jcclover.jcel.util.Constant.Companion.BASE_URL_WEBVIEW
+import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
 import com.jcclover.jcel.webview.WebAppInterFace
 import io.reactivex.disposables.Disposable
@@ -34,12 +36,8 @@ import kotlinx.coroutines.launch
 
 class CustomerCardDetails : Fragment() {
     private lateinit var  viewModel:MainViewModel
-//    var sucess=false
     var editor:SharedPreferences.Editor?=null
    var sharedpreferences: SharedPreferences? = null
-//var amount:Int?=0
-//     var position:Int?=0
-//    private  lateinit var paymentToken:String
     private  var chargeID:String?=null
     lateinit var processbar:ProgressBar
 private val args:CustomerCardDetailsArgs by navArgs()
@@ -55,6 +53,7 @@ lateinit var listenDisposable:Disposable
         sharedpreferences=requireActivity().getSharedPreferences("mylab", Context.MODE_PRIVATE)
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
+        getActivity()?.setTitle("CloverPay");
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         return inflater.inflate(com.jcclover.R.layout.fragment_customer_card_details, container, false)
     }
@@ -68,11 +67,10 @@ lateinit var listenDisposable:Disposable
         webView=view.findViewById(R.id.webView)
       processbar=view.findViewById(R.id.progressbar) as ProgressBar
                 view.findViewById<WebView>(R.id.webView).apply {
-                        settings.javaScriptEnabled=true
+                    settings.javaScriptEnabled=true
                         addJavascriptInterface(WebAppInterFace(requireContext()),"Android")
                         webViewClient = MyWebViewClient(requireContext())
-                         loadUrl("http://192.168.0.106:8080/webnew/sample2.html")
-
+                         loadUrl(BASE_URL_WEBVIEW)
                     }
 
         //Getting data from Webview
@@ -111,13 +109,13 @@ lateinit var listenDisposable:Disposable
                     val action=CustomerCardDetailsDirections.actionCustomerCardDetailsToCustomerList()
                     findNavController().navigate(action)
                     processbar.visibility=View.GONE
-
                     requireActivity().toast("Payment is Successfull")
                 }
                 is ApiResponse.CustomError->{
                     processbar.visibility=View.GONE
                     requireActivity().toast("${ApiResponse.message}")
-                    Log.d("paymentTokenfailure","${ApiResponse.message}")
+                    requireActivity().log("${ApiResponse.message}","ApiResponse")
+
                 }
             }
 

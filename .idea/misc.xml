@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jayachandran V/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.1" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/drawable/background.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/customdialog.xml" value="0.22" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_card_details.xml" value="0.11794871794871795" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_detail.xml" value="0.22" />
         <entry key="..\:/Users/Jayachandran V/jcclover/app/src/main/res/layout/fragment_customer_list.xml" value="0.1" />

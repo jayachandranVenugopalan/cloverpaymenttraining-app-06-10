@@ -22,6 +22,7 @@ class WebAppInterFace(ctx:Context) {
     fun sendData(data:String){
         this.data=data
         RxBus1.publish(RxEvent.PaymentToken(data))
+
     }
 
 }

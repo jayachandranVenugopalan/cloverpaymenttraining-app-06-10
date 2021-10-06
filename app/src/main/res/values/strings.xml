@@ -10,4 +10,8 @@
         <item>Scala</item>
         <item>Perl</item>
     </string-array>
+    <string name="button">click button</string>
+    <string name="dialogTitle">Mode of card payment</string>
+    <string name="dialogMessage">Choose the payment swipe Or manual</string>
+    <string name="dialogMessageSwipe">Swipe payment only work on CloverDevice</string>
 </resources>

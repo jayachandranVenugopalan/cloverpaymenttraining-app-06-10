@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_customerList_to_customerCardDetails"
             app:destination="@id/customerCardDetails" />
+        <action
+            android:id="@+id/action_customerList_to_swipeCardPayment"
+            app:destination="@id/swipeCardPayment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -38,5 +41,14 @@
         <argument
             android:name="position"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/swipeCardPayment"
+        android:name="com.jcclover.jcel.customercarddetails.SwipeCardPayment"
+        android:label="fragment_swipe_card_payment"
+        tools:layout="@layout/fragment_swipe_card_payment" >
+        <action
+            android:id="@+id/action_swipeCardPayment_to_customerList"
+            app:destination="@id/customerList" />
     </fragment>
 </navigation>

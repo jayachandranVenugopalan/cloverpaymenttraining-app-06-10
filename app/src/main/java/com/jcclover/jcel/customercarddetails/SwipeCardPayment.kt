@@ -42,6 +42,7 @@ class SwipeCardPayment : Fragment() {
         paymentConnector.initializeConnection()
         var saleRequest: SaleRequest = setupSaleRequest()
         paymentConnector.sale(saleRequest)
+
     }
 
 
@@ -85,10 +86,13 @@ class SwipeCardPayment : Fragment() {
     private var iPaymentServiceListener = object : IPaymentConnectorListener {
         override fun onDeviceDisconnected() {
             Toast.makeText(context, "Device Disconnected", Toast.LENGTH_SHORT).show()
+
         }
 
         override fun onDeviceConnected() {
             Toast.makeText(context, "Device Connected", Toast.LENGTH_SHORT).show()
+//            var alertDialogue=AlertDialogue(requireActivity())
+//            alertDialogue.alertmessage()
         }
 
 
@@ -117,17 +121,21 @@ class SwipeCardPayment : Fragment() {
         }
 
         override fun onSaleResponse(response: SaleResponse) {
-            Toast.makeText(context, "onSaleResponse", Toast.LENGTH_SHORT).show()
-            val result: String = if (response.success) {
+
+            val result: String? = if (response.success) {
                 "Sale was successful"
             } else {
-                "Sale was unsuccessful" + response.reason + ":" + response.message
+                "Sale was unsuccessful"
+               // + response.reason + ":" + response.message
             }
-            Toast.makeText(
-                context,
-                result,
-                Toast.LENGTH_LONG
-            ).show()
+//            requireActivity().log("${result}","salesResponse")
+//            Toast.makeText(
+//                context,
+//                result!!,
+//                Toast.LENGTH_LONG
+//            ).show()
+onDestroyView()
+            onDestroy()
         }
 
         override fun onManualRefundResponse(p0: ManualRefundResponse?) {
@@ -172,4 +180,8 @@ class SwipeCardPayment : Fragment() {
 
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

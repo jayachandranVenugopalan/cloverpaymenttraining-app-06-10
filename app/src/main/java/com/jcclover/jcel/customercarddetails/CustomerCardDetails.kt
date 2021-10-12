@@ -29,22 +29,21 @@ import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
 import com.jcclover.jcel.webview.WebAppInterFace
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class CustomerCardDetails : Fragment() {
+    private lateinit var cardViewModel:CardDetailsViewModel
     private lateinit var  viewModel:MainViewModel
     var editor:SharedPreferences.Editor?=null
-   var sharedpreferences: SharedPreferences? = null
+    var sharedpreferences: SharedPreferences? = null
     private  var chargeID:String?=null
     lateinit var processbar:ProgressBar
-private val args:CustomerCardDetailsArgs by navArgs()
-private  var payToken:String?=null
+    private val args:CustomerCardDetailsArgs by navArgs()
+    private  var payToken:String?=null
     var webView:WebView?=null
-lateinit var listenDisposable:Disposable
-
+    lateinit var listenDisposable:Disposable
+    var scope= CoroutineScope(CoroutineName("MyScope")+Dispatchers.Main)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -55,6 +54,7 @@ lateinit var listenDisposable:Disposable
         val viewModelFactory = MainViewModelFactory(repository)
         getActivity()?.setTitle("CloverPay");
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        cardViewModel=ViewModelProvider(this).get(CardDetailsViewModel::class.java)
         return inflater.inflate(com.jcclover.R.layout.fragment_customer_card_details, container, false)
     }
 
@@ -87,7 +87,7 @@ lateinit var listenDisposable:Disposable
     private val paymentchargeswithToken:BroadcastReceiver=object :BroadcastReceiver(){
 
         override fun onReceive(ctx: Context?, intent: Intent?) {
-            GlobalScope.launch (Dispatchers.Main){
+            scope.launch{
                 processbar.visibility=View.VISIBLE
                 webView!!.visibility=View.GONE
                 var paymentToken:String?=intent!!.getStringExtra("token")

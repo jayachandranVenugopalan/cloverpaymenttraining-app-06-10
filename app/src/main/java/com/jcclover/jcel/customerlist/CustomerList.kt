@@ -31,6 +31,8 @@ import com.jcclover.jcel.repository.Repository
 import com.jcclover.jcel.util.AlertDialogue
 import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
 
 
 class CustomerList : Fragment(),OnServiceClickListner {
@@ -47,7 +49,7 @@ class CustomerList : Fragment(),OnServiceClickListner {
     var expandable: Boolean = false
     var invoiceno: String? = null
     private lateinit var viewModel: MainViewModel
-
+var scope= CoroutineScope(CoroutineName("MyScope"))
     companion object {
         var invoicelist = InvoiceList().createList()
     }
@@ -146,11 +148,36 @@ class CustomerList : Fragment(),OnServiceClickListner {
                 service.orderId,
                 service.invoiceNO)
 
-            alertmessage(service.amount, position)
-            dialog.show()
+            alertmessageCustom(service.amount, position)
+           // dialog.show()
 
         }
+    }
+    fun alertmessageCustom(amount: String, position: Int){
+        val mDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.customdialog, null)
+        val swipe: Button = mDialogView.findViewById(R.id.btn_cancel)
+        val manual: Button = mDialogView.findViewById(R.id.btn_okay)
+        val mBuilder = AlertDialog.Builder(requireActivity())
+            .setView(mDialogView)
+            .setTitle("CloverPay")
+        val  mAlertDialog = mBuilder.show()
+        manual.setOnClickListener {
+            requireActivity().toast("Manual card Entry")
 
+
+            val action = CustomerListDirections.actionCustomerListToCustomerCardDetails(amount.toInt(),position)
+            findNavController().navigate(action)
+            mAlertDialog.dismiss()
+        }
+
+        swipe.setOnClickListener {
+            requireActivity().toast("Swipe Entry")
+            var alertDialogue=AlertDialogue(requireActivity())
+            alertDialogue.alertmessage()
+//            val action = CustomerListDirections.actionCustomerListToSwipeCardPayment()
+//            findNavController().navigate(action)
+            mAlertDialog.dismiss()
+        }
     }
 
     fun alertmessage(amount: String, position: Int) {

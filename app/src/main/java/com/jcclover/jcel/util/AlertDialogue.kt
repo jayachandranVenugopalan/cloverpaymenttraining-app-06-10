@@ -17,7 +17,7 @@ class AlertDialogue(ctx: Context) {
 init {
     this.activity=ctx
 }
-    fun alertmessage():Boolean {
+    fun alertmessage() {
 
 
         //set title for alert dialog
@@ -27,7 +27,8 @@ init {
         builder.setIcon(android.R.drawable.ic_dialog_alert)
         //performing positive action
         builder.setPositiveButton("Ok") { dialogInterface, which ->
-alertStatus=true
+
+
         }
 
         // Create the AlertDialog
@@ -35,7 +36,7 @@ alertStatus=true
         // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
-    return alertStatus
+
     }
 
 }

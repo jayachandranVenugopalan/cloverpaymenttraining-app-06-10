@@ -1,13 +1,8 @@
 package com.jcclover.jcel.webview
 
 import android.content.Context
-import android.util.Log
 import android.webkit.JavascriptInterface
-import androidx.navigation.Navigation.findNavController
 
-import androidx.navigation.fragment.findNavController
-import com.jcclover.jcel.customercarddetails.CustomerCardDetails
-import com.jcclover.jcel.customercarddetails.CustomerCardDetailsDirections
 import com.jcclover.jcel.event.RxBus1
 import com.jcclover.jcel.event.RxEvent
 

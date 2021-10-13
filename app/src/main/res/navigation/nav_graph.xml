@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/customerList"
-        android:name="com.jcclover.jcel.customerlist.CustomerList"
+        android:name="com.jcclover.jcel.ui.CustomerList"
         android:label="fragment_customer_list"
         tools:layout="@layout/fragment_customer_list" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.jcclover.jcel.LoginFragment"
+        android:name="com.jcclover.jcel.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerCardDetails"
-        android:name="com.jcclover.jcel.customercarddetails.CustomerCardDetails"
+        android:name="com.jcclover.jcel.ui.CustomerCardDetails"
         android:label="fragment_customer_card_details"
         tools:layout="@layout/fragment_customer_card_details" >
         <action

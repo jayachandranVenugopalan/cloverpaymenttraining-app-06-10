@@ -5,17 +5,18 @@ plugins {
 apply plugin: 'kotlin-kapt'
 apply plugin:'androidx.navigation.safeargs.kotlin'
 
-android {
-    compileSdk 31
-dataBinding{
-    enabled = true
 
-}
+android {
+    compileSdk 30
+    buildFeatures {
+      dataBinding true
+      viewBinding true
+    }
+
+
     defaultConfig {
-//       applicationId "com.example.clover"
-//       buildConfigField "String", "RAID", "\"J3HG8P5ZJDRPA.Z70ZEZC3A2ABR\""
-       // buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
-  applicationId "com.jcclover"
+
+        applicationId "com.jcclover"
         buildConfigField "String", "RAID", "\"JMB8M5B10P6N6.7TBNGWY4HZXR2\""
         minSdk 17
 

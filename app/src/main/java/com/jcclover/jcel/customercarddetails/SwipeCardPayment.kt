@@ -19,7 +19,7 @@ import com.clover.sdk.v3.connector.IPaymentConnectorListener
 import com.clover.sdk.v3.payments.TipMode
 import com.jcclover.R
 import com.clover.sdk.v3.remotepay.*
-import com.jcclover.jcel.customerlist.CustomerListDirections
+//import com.jcclover.jcel.customerlist.CustomerListDirections
 import com.jcclover.jcel.util.AlertDialogue
 import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast

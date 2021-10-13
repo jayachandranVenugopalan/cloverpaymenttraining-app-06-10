@@ -2,13 +2,8 @@ package com.jcclover.jcel.util
 
 import android.app.AlertDialog
 import android.content.Context
-import android.widget.Toast
-import androidx.navigation.Navigation.findNavController
 
-import androidx.navigation.fragment.findNavController
 import com.jcclover.R
-import com.jcclover.jcel.customerlist.CustomerList
-import com.jcclover.jcel.customerlist.CustomerListDirections
 
 class AlertDialogue(ctx: Context) {
     val builder = AlertDialog.Builder(ctx)

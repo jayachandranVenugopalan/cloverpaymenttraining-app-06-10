@@ -1,17 +1,16 @@
-package com.jcclover.jcel.customerlist
+package com.jcclover.jcel.ui
 
 import android.accounts.Account
 import android.app.AlertDialog
 import android.app.Dialog
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
@@ -20,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.clover.sdk.util.CloverAccount
 import com.clover.sdk.v3.order.*
 import com.jcclover.R
+import com.jcclover.databinding.FragmentCustomerListBinding
 import com.jcclover.jcel.Implementation.OnServiceClickListner
-import com.jcclover.jcel.customercarddetails.SwipeCardPayment
+import com.jcclover.jcel.customerlist.CustomerListAdaptor
+import com.jcclover.jcel.customerlist.InvoiceList
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModel
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModelFactory
 import com.jcclover.jcel.event.RxBus1
@@ -29,8 +30,8 @@ import com.jcclover.jcel.event.RxEvent
 import com.jcclover.jcel.modelclass.*
 import com.jcclover.jcel.repository.Repository
 import com.jcclover.jcel.util.AlertDialogue
-import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 
@@ -49,7 +50,10 @@ class CustomerList : Fragment(),OnServiceClickListner {
     var expandable: Boolean = false
     var invoiceno: String? = null
     private lateinit var viewModel: MainViewModel
-var scope= CoroutineScope(CoroutineName("MyScope"))
+    private lateinit var binding: FragmentCustomerListBinding
+    lateinit var listenDisposable: Disposable
+
+ var scope= CoroutineScope(CoroutineName("MyScope"))
     companion object {
         var invoicelist = InvoiceList().createList()
     }
@@ -63,23 +67,20 @@ var scope= CoroutineScope(CoroutineName("MyScope"))
         connect()
         //to remove the back button in top of the fragment
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+        binding = FragmentCustomerListBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_list, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        rcCusList = view.findViewById(R.id.customerlist_recycler_view)
+//        rcCusList = view.findViewById(R.id.customerlist_recycler_view)
+        rcCusList = binding.customerlistRecyclerView
         recyclerView()
 
-        RxBus1.listen(RxEvent.ResponseOrderId::class.java).subscribe {
-
-
+        listenDisposable=  RxBus1.listen(RxEvent.ResponseOrderId::class.java).subscribe {
             adaptor.notifyDataSetChanged().apply {
                 invoicelist[it.position].uniqueIdentifiaction = it.orderId
                 invoicelist[it.position].paymentStatus = "Paid"
@@ -94,7 +95,7 @@ var scope= CoroutineScope(CoroutineName("MyScope"))
     }
 
     private fun recyclerView() {
-        adaptor = CustomerListAdaptor(Companion.invoicelist)
+        adaptor = CustomerListAdaptor(invoicelist)
         rcCusList.layoutManager = LinearLayoutManager(activity)
         adaptor.setonClickListner(this)
         rcCusList.adapter = adaptor
@@ -112,7 +113,9 @@ var scope= CoroutineScope(CoroutineName("MyScope"))
 
     override fun onDestroy() {
         super<Fragment>.onDestroy()
+
         disconnect()
+        listenDisposable.dispose()
     }
 
     private fun connect() {
@@ -163,8 +166,6 @@ var scope= CoroutineScope(CoroutineName("MyScope"))
         val  mAlertDialog = mBuilder.show()
         manual.setOnClickListener {
             requireActivity().toast("Manual card Entry")
-
-
             val action = CustomerListDirections.actionCustomerListToCustomerCardDetails(amount.toInt(),position)
             findNavController().navigate(action)
             mAlertDialog.dismiss()
@@ -180,38 +181,7 @@ var scope= CoroutineScope(CoroutineName("MyScope"))
         }
     }
 
-    fun alertmessage(amount: String, position: Int) {
-        dialog = Dialog(requireActivity())
-        dialog.setContentView(R.layout.customdialog)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            dialog.window?.setBackgroundDrawable(requireActivity().getDrawable(R.drawable.background))
-        }
-        dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
-        dialog.setCancelable(false)
-         dialog.window?.attributes?.windowAnimations=R.style.DialogAnimation
-        val swipe: Button = dialog.findViewById(R.id.btn_cancel)
-        val manual: Button = dialog.findViewById(R.id.btn_okay)
-        manual.setOnClickListener {
-            requireActivity().toast("Manual card Entry")
-            val action =
-                CustomerListDirections.actionCustomerListToCustomerCardDetails(amount.toInt(),
-                    position)
-            findNavController().navigate(action)
-            dialog.dismiss()
 
-        }
-        swipe.setOnClickListener {
-            requireActivity().toast("Swipe card")
-            val action =
-                CustomerListDirections.actionCustomerListToSwipeCardPayment()
-            findNavController().navigate(action)
-
-            dialog.dismiss()
-        }
-
-
-    }
 }
 
 

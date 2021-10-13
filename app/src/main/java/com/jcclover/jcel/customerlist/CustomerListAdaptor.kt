@@ -9,7 +9,11 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jcclover.DataBinderMapperImpl
 import com.jcclover.R
+import com.jcclover.databinding.FragmentCustomerListBinding
+import com.jcclover.databinding.FragmentLoginBinding
+import com.jcclover.databinding.RowBinding
 import com.jcclover.jcel.Implementation.OnServiceClickListner
 import com.jcclover.jcel.event.RxBus1
 import com.jcclover.jcel.event.RxEvent
@@ -19,9 +23,12 @@ import java.util.ArrayList
 
 class CustomerListAdaptor(var paymentDetailsList:ArrayList<PaymentOrder>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var isExpandable:Boolean=false
+     lateinit var binding:RowBinding
     private var onClickListner: OnServiceClickListner?=null
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var customerList =LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
+         //   var customerList =LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
+           binding= RowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+           var customerList =binding.root
            return InvoiceViewHolder(customerList)
 
     }
@@ -76,7 +83,8 @@ class CustomerListAdaptor(var paymentDetailsList:ArrayList<PaymentOrder>): Recyc
         return paymentDetailsList.size
     }
 
-    class InvoiceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    internal class InvoiceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         var customerName:TextView=view.findViewById(R.id.customer_name)
        var customerId:TextView=view.findViewById(R.id.cus_id)
         var amount:TextView=view.findViewById(R.id.cus_amount)

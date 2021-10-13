@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:accessibilityPaneTitle="Swipe payment"
     tools:context=".jcel.customercarddetails.SwipeCardPayment">
 
-    <!-- TODO: Update blank fragment layout -->
+ <ImageView
+     android:layout_marginLeft="40dp"
+     android:layout_width="30dp"
+     android:layout_height="match_parent"
+     android:src="@android:drawable/ic_dialog_alert">
+
+ </ImageView>
     <TextView
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingLeft="0dp"
+        android:text="Swipe payment only works on cloverDevice" />
 
-</FrameLayout>
+</LinearLayout>

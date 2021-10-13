@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="13dp"
-    android:layout_marginRight="13dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="13sp"
+    android:layout_marginRight="13sp"
+    android:layout_marginTop="5sp"
+    android:layout_marginBottom="5sp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="2dp"
     app:cardElevation="3dp"
@@ -55,61 +55,61 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="16sp"
                 android:text="Customer Name:"
                 android:textSize="18dp"
                 android:textColor="#EE555454"/>
             <TextView
-                android:layout_marginLeft="195dp"
+                android:layout_marginLeft="195sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/customer_name"
-                android:padding="16dp"
+                android:padding="16sp"
                 android:text="Customer Name"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textColor="#000"/>
             <TextView
 
-                android:layout_marginLeft="400dp"
+                android:layout_marginLeft="400sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="16sp"
                 android:text="InvoiceNo:"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="#EE555454"/>
             <TextView
-                android:padding="16dp"
+                android:padding="16sp"
                 android:id="@+id/invoice_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="550dp"
+                android:layout_marginLeft="550sp"
                 android:text="Invoice NO"
                 android:textColor="#000"
                 android:textSize="19dp" />
 
             <TextView
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="175dp"
+                android:layout_marginRight="175sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="16sp"
                 android:text="Amount:"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="#EE555454"/>
             <TextView
-                android:padding="16dp"
+                android:padding="16sp"
                 android:id="@+id/cus_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                android:layout_alignParentRight="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="50sp"
                 android:text="Amount"
                 android:textAlignment="textStart"
                 android:textColor="#000"
-                android:textSize="19dp" />
+                android:textSize="19sp" />
         </RelativeLayout>
 
 
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/expandablelayout"
-            android:paddingTop="10dp">
+            android:paddingTop="10sp">
 
 
             <TextView
@@ -127,14 +127,14 @@
                 android:padding="16dp"
                 android:layout_marginRight="200dp"
                 android:text="PaymentStatus :"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="#EE555454"/>
             <TextView
                 android:id="@+id/cus_payment_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-              android:layout_marginRight="90dp"
-                android:padding="16dp"
+              android:layout_marginRight="90sp"
+                android:padding="16sp"
                 android:text="Status"
                 android:layout_alignParentRight="true"
                 android:textColor="#E1AF1B"
@@ -154,11 +154,11 @@
                 android:id="@+id/cus_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="25dp"
-                android:paddingTop="30dp"
+                android:paddingLeft="25sp"
+                android:paddingTop="30sp"
                 android:text="CustomerId"
                 android:textColor="#000"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
             <TextView
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/cus_payment_status"
@@ -166,7 +166,7 @@ android:layout_marginLeft="25dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Receipt No:-  "
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:background="#008577"
                 android:textColor="#ffff"/>
 

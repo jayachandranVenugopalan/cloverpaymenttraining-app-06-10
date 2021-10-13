@@ -1,4 +1,4 @@
-package com.jcclover.jcel
+package com.jcclover.jcel.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,11 @@ import android.widget.Button
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jcclover.R
+import com.jcclover.databinding.FragmentLoginBinding
 
 
 class LoginFragment : Fragment() {
-
+private lateinit var binding:FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,13 +21,14 @@ class LoginFragment : Fragment() {
     ): View? {
         getActivity()?.setTitle("JcelCloverpay");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        binding= FragmentLoginBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<Button>(R.id.Submit_Btn).setOnClickListener {
-findNavController().navigate(R.id.action_loginFragment_to_customerList)
-//Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_customerList)
+
+        binding.SubmitBtn.setOnClickListener{
+        findNavController().navigate(R.id.action_loginFragment_to_customerList)
         }
     }
 }

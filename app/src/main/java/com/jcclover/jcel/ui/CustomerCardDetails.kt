@@ -25,11 +25,15 @@ import com.jcclover.jcel.repository.Repository
 import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCardDetailsBinding>(),
     CardDetailsInterface {
-   // private lateinit var cardViewModel: CardDetailsViewModel
+    var scope= CoroutineScope(CoroutineName("MyScope") + Dispatchers.Main)
    private lateinit var  viewModelMain:MainViewModel
     private  var chargeID:String?=null
     private val args:CustomerCardDetailsArgs by navArgs()
@@ -49,14 +53,14 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
 
     override fun onStart() {
         super.onStart()
-        requireContext().registerReceiver(viewModel.paymentchargeswithToken, IntentFilter("Action_update_token"))
+        requireContext().registerReceiver(paymentchargeswithToken, IntentFilter("Action_update_token"))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         getActivity()?.setTitle("CloverPay");
         viewModelMain = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel=ViewModelProvider(this).get(CardDetailsViewModel::class.java)
+     //   viewModel=ViewModelProvider(this).get(CardDetailsViewModel::class.java)
         viewModel.callwebView(binding,requireContext())
 
         //Getting data from Webview
@@ -68,7 +72,19 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
             }
     }
 
+    val paymentchargeswithToken: BroadcastReceiver =object : BroadcastReceiver(){
 
+        override fun onReceive(ctx: Context?, intent: Intent?) {
+            scope.launch{
+
+                binding.progressbar.visibility= View.VISIBLE
+                binding.webView.visibility= View.GONE
+                var paymentToken:String?=intent!!.getStringExtra("token")
+          createChanges(paymentToken!!,args.amount,args.position)
+
+            }
+        }
+    }
 
 
 
@@ -99,7 +115,7 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
 
 
     override fun onStop() {
-        requireContext().unregisterReceiver(viewModel.paymentchargeswithToken)
+        requireContext().unregisterReceiver(paymentchargeswithToken)
         super.onStop()
     }
 

@@ -21,8 +21,10 @@ import com.clover.sdk.v3.order.*
 import com.jcclover.R
 import com.jcclover.databinding.FragmentCustomerListBinding
 import com.jcclover.jcel.Implementation.OnServiceClickListner
+import com.jcclover.jcel.base.BaseFragment
 import com.jcclover.jcel.customerlist.CustomerListAdaptor
 import com.jcclover.jcel.customerlist.InvoiceList
+import com.jcclover.jcel.customerlist.customviewmodel.CustomerListViewModel
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModel
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModelFactory
 import com.jcclover.jcel.event.RxBus1
@@ -36,11 +38,8 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 
 
-class CustomerList : Fragment(),OnServiceClickListner {
-    private lateinit var dialog: Dialog
-    private var mAccount: Account? = null
+class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBinding>(),OnServiceClickListner {
     private lateinit var rcCusList: RecyclerView
-    var mOrderConnector: OrderConnector? = null
     private lateinit var paymentOrder: PaymentOrder
     lateinit var adaptor: CustomerListAdaptor
     var customerName: String? = null
@@ -49,38 +48,26 @@ class CustomerList : Fragment(),OnServiceClickListner {
     var paystatus: String? = null
     var expandable: Boolean = false
     var invoiceno: String? = null
-    private lateinit var viewModel: MainViewModel
-    private lateinit var binding: FragmentCustomerListBinding
+
     lateinit var listenDisposable: Disposable
 
- var scope= CoroutineScope(CoroutineName("MyScope"))
+
     companion object {
         var invoicelist = InvoiceList().createList()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        activity?.title = "Invoice List";
-        getCloverAccount()
-        connect()
-        //to remove the back button in top of the fragment
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        binding = FragmentCustomerListBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-        return binding.root
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+//        val repository = Repository()
+//        val viewModelFactory = MainViewModelFactory(repository)
+//        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 //        rcCusList = view.findViewById(R.id.customerlist_recycler_view)
         rcCusList = binding.customerlistRecyclerView
         recyclerView()
 
-        listenDisposable=  RxBus1.listen(RxEvent.ResponseOrderId::class.java).subscribe {
+        listenDisposable = RxBus1.listen(RxEvent.ResponseOrderId::class.java).subscribe {
             adaptor.notifyDataSetChanged().apply {
                 invoicelist[it.position].uniqueIdentifiaction = it.orderId
                 invoicelist[it.position].paymentStatus = "Paid"
@@ -102,36 +89,6 @@ class CustomerList : Fragment(),OnServiceClickListner {
 
     }
 
-    private fun getCloverAccount() {
-        if (mAccount == null) {
-            mAccount = CloverAccount.getAccount(activity)
-            if (mAccount == null) {
-                return
-            }
-        }
-    }
-
-    override fun onDestroy() {
-        super<Fragment>.onDestroy()
-
-        disconnect()
-        listenDisposable.dispose()
-    }
-
-    private fun connect() {
-        disconnect()
-        if (mAccount != null) {
-            mOrderConnector = OrderConnector(activity, mAccount, null)
-            mOrderConnector!!.connect()
-        }
-    }
-
-    private fun disconnect() {
-        if (mOrderConnector != null) {
-            mOrderConnector!!.disconnect()
-            mOrderConnector = null
-        }
-    }
 
     override fun onServiceClicked(service: Any, position: Int) {
         if (service is PaymentOrder) {
@@ -152,28 +109,32 @@ class CustomerList : Fragment(),OnServiceClickListner {
                 service.invoiceNO)
 
             alertmessageCustom(service.amount, position)
-           // dialog.show()
+            // dialog.show()
 
         }
     }
-    fun alertmessageCustom(amount: String, position: Int){
-        val mDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.customdialog, null)
+
+    fun alertmessageCustom(amount: String, position: Int) {
+        val mDialogView =
+            LayoutInflater.from(requireActivity()).inflate(R.layout.customdialog, null)
         val swipe: Button = mDialogView.findViewById(R.id.btn_cancel)
         val manual: Button = mDialogView.findViewById(R.id.btn_okay)
         val mBuilder = AlertDialog.Builder(requireActivity())
             .setView(mDialogView)
             .setTitle("CloverPay")
-        val  mAlertDialog = mBuilder.show()
+        val mAlertDialog = mBuilder.show()
         manual.setOnClickListener {
             requireActivity().toast("Manual card Entry")
-            val action = CustomerListDirections.actionCustomerListToCustomerCardDetails(amount.toInt(),position)
+            val action =
+                CustomerListDirections.actionCustomerListToCustomerCardDetails(amount.toInt(),
+                    position)
             findNavController().navigate(action)
             mAlertDialog.dismiss()
         }
 
         swipe.setOnClickListener {
             requireActivity().toast("Swipe Entry")
-            var alertDialogue=AlertDialogue(requireActivity())
+            var alertDialogue = AlertDialogue(requireActivity())
             alertDialogue.alertmessage()
 //            val action = CustomerListDirections.actionCustomerListToSwipeCardPayment()
 //            findNavController().navigate(action)
@@ -181,9 +142,21 @@ class CustomerList : Fragment(),OnServiceClickListner {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+
+        listenDisposable.dispose()
+    }
+
+    override fun getViewModel() = CustomerListViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ) = FragmentCustomerListBinding.inflate(inflater, container, false)
 
 }
-
 
 
 

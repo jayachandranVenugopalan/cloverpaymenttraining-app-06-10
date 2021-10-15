@@ -17,11 +17,11 @@ import kotlinx.coroutines.launch
 
 
 class CardDetailsViewModel: ViewModel() {
-    var scope= CoroutineScope(CoroutineName("MyScope") + Dispatchers.Main)
+
 private lateinit var binding: FragmentCustomerCardDetailsBinding
 private lateinit var requireContext: Context
     private lateinit var  viewModel:MainViewModel
-private lateinit var cardDetailsInterface: CardDetailsInterface
+private var cardDetailsInterface: CardDetailsInterface?=null
 fun callwebView(binding: FragmentCustomerCardDetailsBinding, requireContext: Context) {
    this.binding=binding
     this.requireContext=requireContext
@@ -34,18 +34,7 @@ fun callwebView(binding: FragmentCustomerCardDetailsBinding, requireContext: Con
 }
 
 
-    val paymentchargeswithToken: BroadcastReceiver =object : BroadcastReceiver(){
 
-        override fun onReceive(ctx: Context?, intent: Intent?) {
-            scope.launch{
-                binding.progressbar.visibility= View.VISIBLE
-                binding.webView.visibility= View.GONE
-                var paymentToken:String?=intent!!.getStringExtra("token")
-//                createChanges(paymentToken!!,args.amount,args.position)
-                cardDetailsInterface.sendingdata(paymentToken)
-            }
-        }
-    }
 
 
 

@@ -1,34 +1,32 @@
 package com.jcclover.jcel.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.jcclover.R
 import com.jcclover.databinding.FragmentLoginBinding
+import com.jcclover.jcel.LoginViewModel
+import com.jcclover.jcel.base.BaseFragment
 
 
-class LoginFragment : Fragment() {
-private lateinit var binding:FragmentLoginBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        getActivity()?.setTitle("JcelCloverpay");
-        // Inflate the layout for this fragment
-        binding= FragmentLoginBinding.inflate(inflater,container,false)
-        return binding.root
-    }
+class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding> (){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+         viewModel.logincall(binding,requireContext())
         binding.SubmitBtn.setOnClickListener{
-        findNavController().navigate(R.id.action_loginFragment_to_customerList)
+           
+           var action=LoginFragmentDirections.actionLoginFragmentToCustomerList()
+           findNavController().navigate(action)
         }
     }
+
+    override fun getViewModel()=LoginViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    )= FragmentLoginBinding.inflate(inflater,container,false)
 }

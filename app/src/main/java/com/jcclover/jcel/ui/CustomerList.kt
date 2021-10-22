@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,7 +23,10 @@ import com.clover.sdk.v3.order.*
 import com.jcclover.R
 import com.jcclover.databinding.FragmentCustomerListBinding
 import com.jcclover.jcel.Implementation.OnServiceClickListner
+import com.jcclover.jcel.base.BaseDialogFragment
 import com.jcclover.jcel.base.BaseFragment
+import com.jcclover.jcel.base.BaseInterface
+import com.jcclover.jcel.base.BaseViewModel
 import com.jcclover.jcel.customerlist.CustomerListAdaptor
 import com.jcclover.jcel.customerlist.InvoiceList
 import com.jcclover.jcel.customerlist.customviewmodel.CustomerListViewModel
@@ -31,55 +36,76 @@ import com.jcclover.jcel.event.RxBus1
 import com.jcclover.jcel.event.RxEvent
 import com.jcclover.jcel.modelclass.*
 import com.jcclover.jcel.repository.Repository
+import com.jcclover.jcel.screens.dialog.DialogManger
 import com.jcclover.jcel.util.AlertDialogue
+import com.jcclover.jcel.util.log
 import com.jcclover.jcel.util.toast
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 
 
-class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBinding>(),OnServiceClickListner {
+class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBinding,BaseDialogFragment>(),OnServiceClickListner ,BaseInterface{
     private lateinit var rcCusList: RecyclerView
     private lateinit var paymentOrder: PaymentOrder
-    lateinit var adaptor: CustomerListAdaptor
-    var customerName: String? = null
-    var customerid: String? = null
-    var amount: String? = null
-    var paystatus: String? = null
-    var expandable: Boolean = false
-    var invoiceno: String? = null
-
-    lateinit var listenDisposable: Disposable
-
-
+    private lateinit var adaptor: CustomerListAdaptor
+    private lateinit var listenDisposable: Disposable
+    var amount:String= MutableLiveData<String>().toString()
+    var position:String= MutableLiveData<String>().toString()
+    var scope= CoroutineScope(CoroutineName("MyCustomerlistscope") + Dispatchers.Main)
+    lateinit var dialogManger:DialogManger
     companion object {
         var invoicelist = InvoiceList().createList()
     }
 
+      override fun getViewModel()=CustomerListViewModel::class.java
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ) = FragmentCustomerListBinding.inflate(inflater, container, false)
 
+    override fun getDialog(): BaseDialogFragment = BaseDialogFragment ()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-//        val repository = Repository()
-//        val viewModelFactory = MainViewModelFactory(repository)
-//        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-//        rcCusList = view.findViewById(R.id.customerlist_recycler_view)
+
         rcCusList = binding.customerlistRecyclerView
         recyclerView()
+        dialogManger = DialogManger(requireActivity(), requireActivity().supportFragmentManager)
 
         listenDisposable = RxBus1.listen(RxEvent.ResponseOrderId::class.java).subscribe {
             adaptor.notifyDataSetChanged().apply {
                 invoicelist[it.position].uniqueIdentifiaction = it.orderId
                 invoicelist[it.position].paymentStatus = "Paid"
-
                 if (invoicelist[it.position].paymentStatus == "Paid") {
                     view.findViewById<Button>(R.id.btn_details).visibility = View.INVISIBLE
                 }
             }
         }
 
+        listenDisposable = RxBus1.listen(RxEvent.EventDialog::class.java).subscribe {
+            when (it.dialogEvent) {
+                RxEvent.DialogEventEnum.PAYMENT_PAGE -> {
+                    try {
+                        requireContext().log("position i clicked ${position.toInt()}","Customerlist")
+                        val action =
+                            CustomerListDirections.actionCustomerListToCustomerCardDetails(amount!!.toInt(),
+                                position!!.toInt())
+                        findNavController().navigate(action)
+                        onDestroy()
 
-    }
+                    }catch (e:Exception){
+                        requireContext().log("error msg $e","Exception")
+                    }
+                }
+               // RxEvent.DialogEventEnum.POSITIVE -> {
+
+                }
+              //  RxEvent.DialogEventEnum.NEGATIVE -> {
+
+                }
+            }
+
+
 
     private fun recyclerView() {
         adaptor = CustomerListAdaptor(invoicelist)
@@ -93,12 +119,6 @@ class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBind
     override fun onServiceClicked(service: Any, position: Int) {
         if (service is PaymentOrder) {
 
-            customerName = service.customerName
-            customerid = service.customerid
-            amount = service.amount
-            paystatus = service.paymentStatus
-            expandable = service.expandable
-            invoiceno = service.invoiceNO
             paymentOrder = PaymentOrder(service.uniqueIdentifiaction,
                 service.customerName,
                 service.customerid,
@@ -107,12 +127,20 @@ class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBind
                 service.expandable,
                 service.orderId,
                 service.invoiceNO)
+           amount=service.amount
+           this.position=position.toString()
 
-            alertmessageCustom(service.amount, position)
-            // dialog.show()
+
+   //alertmessageCustom(service.amount, position)
+
+  //baseDialogFragment.show(requireActivity().supportFragmentManager,"Fragment")
+
+
+dialogManger.showAppExitDialog(service.amount,position,"exit")
 
         }
     }
+
 
     fun alertmessageCustom(amount: String, position: Int) {
         val mDialogView =
@@ -136,25 +164,26 @@ class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBind
             requireActivity().toast("Swipe Entry")
             var alertDialogue = AlertDialogue(requireActivity())
             alertDialogue.alertmessage()
-//            val action = CustomerListDirections.actionCustomerListToSwipeCardPayment()
-//            findNavController().navigate(action)
             mAlertDialog.dismiss()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-
         listenDisposable.dispose()
+//        getDialog().dismiss()
+        position=""
+        requireActivity().log(" destroy position $position","Customerlist")
     }
 
-    override fun getViewModel() = CustomerListViewModel::class.java
+    override fun success() {
+        requireActivity().log(" in customer list sucess","BaseInterface")
+    }
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-    ) = FragmentCustomerListBinding.inflate(inflater, container, false)
+    override fun failure() {
+
+    }
+
 
 }
 

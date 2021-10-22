@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.jcclover.databinding.FragmentCustomerCardDetailsBinding
+import com.jcclover.jcel.base.BaseDialogFragment
 import com.jcclover.jcel.base.BaseFragment
 import com.jcclover.jcel.customercarddetails.CardDetailsInterface
 import com.jcclover.jcel.customercarddetails.CardDetailsViewModel
@@ -31,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCardDetailsBinding>(),
+class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCardDetailsBinding,BaseDialogFragment>(),
     CardDetailsInterface {
     var scope= CoroutineScope(CoroutineName("MyScope") + Dispatchers.Main)
    private lateinit var  viewModelMain:MainViewModel
@@ -54,13 +55,14 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
     override fun onStart() {
         super.onStart()
         requireContext().registerReceiver(paymentchargeswithToken, IntentFilter("Action_update_token"))
+       // requireContext().registerReceiver(dialogresponse, IntentFilter("Action_dialogresponse"))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         getActivity()?.setTitle("CloverPay");
         viewModelMain = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-     //   viewModel=ViewModelProvider(this).get(CardDetailsViewModel::class.java)
+
         viewModel.callwebView(binding,requireContext())
 
         //Getting data from Webview
@@ -97,7 +99,10 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
             when(ApiResponse){
                 is ApiResponse.Success->{
                     chargeID=ApiResponse.response.id
+
+                //    RxBus1.publish(RxEvent.chargesSucess(chargeID!!,"Success"))
                     RxBus1.publish(RxEvent.ResponseOrderId(chargeID!!,amount.toString(),position))
+                    requireContext().log("create changes$position","createCHanges")
                     val action=CustomerCardDetailsDirections.actionCustomerCardDetailsToCustomerList()
                     findNavController().navigate(action)
                     binding.progressbar.visibility=View.GONE
@@ -116,6 +121,7 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
 
     override fun onStop() {
         requireContext().unregisterReceiver(paymentchargeswithToken)
+      //  requireContext().unregisterReceiver(dialogresponse)
         super.onStop()
     }
 
@@ -129,5 +135,20 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
         createChanges(paymentToken!!,args.amount,args.position)
     }
 
+    override fun getDialog()= BaseDialogFragment()
+
+//    val dialogresponse: BroadcastReceiver =object : BroadcastReceiver(){
+//
+//        override fun onReceive(ctx: Context?, intent: Intent?) {
+//            scope.launch{
+//                var paymentToken:String?=intent!!.getStringExtra("token")
+//                val action =
+//                    CustomerListDirections.actionCustomerListToCustomerCardDetails(amount!!.toInt(),
+//                        position!!)
+//                findNavController().navigate(action)
+//
+//            }
+//        }
+//    }
 
 }

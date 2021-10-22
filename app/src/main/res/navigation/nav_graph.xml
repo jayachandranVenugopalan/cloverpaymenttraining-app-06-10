@@ -51,4 +51,21 @@
             android:id="@+id/action_swipeCardPayment_to_customerList"
             app:destination="@id/customerList" />
     </fragment>
+    <dialog
+        android:id="@+id/baseDialogFragment"
+        android:name="com.jcclover.jcel.base.BaseDialogFragment"
+        android:label="BaseDialogFragment" >
+        <action
+            android:id="@+id/action_baseDialogFragment_to_customerCardDetails"
+            app:destination="@id/customerCardDetails" />
+        <argument
+            android:name="amount"
+            app:argType="integer" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_baseDialogFragment_to_customerList"
+            app:destination="@id/customerList" />
+    </dialog>
 </navigation>

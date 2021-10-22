@@ -9,10 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.jcclover.R
 import com.jcclover.databinding.FragmentLoginBinding
 import com.jcclover.jcel.LoginViewModel
+import com.jcclover.jcel.base.BaseDialogFragment
 import com.jcclover.jcel.base.BaseFragment
 
 
-class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding> (){
+class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding,BaseDialogFragment> (){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
          viewModel.logincall(binding,requireContext())
@@ -29,4 +30,6 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding> (){
         inflater: LayoutInflater,
         container: ViewGroup?,
     )= FragmentLoginBinding.inflate(inflater,container,false)
+
+    override fun getDialog()=BaseDialogFragment()
 }

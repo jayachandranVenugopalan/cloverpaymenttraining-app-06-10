@@ -6,6 +6,7 @@ import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.jcclover.databinding.FragmentCustomerCardDetailsBinding
+import com.jcclover.jcel.base.BaseViewModel
 import com.jcclover.jcel.customerlist.customviewmodel.MainViewModel
 import com.jcclover.jcel.util.Constant
 import com.jcclover.jcel.webview.MyWebViewClient
@@ -16,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class CardDetailsViewModel: ViewModel() {
+class CardDetailsViewModel: BaseViewModel() {
 
 private lateinit var binding: FragmentCustomerCardDetailsBinding
 private lateinit var requireContext: Context

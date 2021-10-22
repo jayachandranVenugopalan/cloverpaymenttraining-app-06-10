@@ -9,9 +9,10 @@ import androidx.navigation.fragment.findNavController
 
 import com.jcclover.R
 import com.jcclover.databinding.FragmentLoginBinding
+import com.jcclover.jcel.base.BaseViewModel
 import com.jcclover.jcel.ui.LoginFragmentDirections
 
-class LoginViewModel:ViewModel() {
+class LoginViewModel:BaseViewModel() {
 
    fun logincall(binding: FragmentLoginBinding, requireContext: Context) {
 

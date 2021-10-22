@@ -14,10 +14,14 @@ import com.jcclover.jcel.ui.LoginFragmentDirections
 
 class LoginViewModel:BaseViewModel() {
 
+    init {
+        toastMessage.value="Login Successfully "
+    }
    fun logincall(binding: FragmentLoginBinding, requireContext: Context) {
 
       var username= binding.username.text.toString()
        Log.d("this","requireContext $username")
+
        }
 
    }

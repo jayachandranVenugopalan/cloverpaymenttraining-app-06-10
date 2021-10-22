@@ -4,4 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.jcclover.jcel.base.BaseViewModel
 
 class CustomerListViewModel:BaseViewModel() {
+
+
 }

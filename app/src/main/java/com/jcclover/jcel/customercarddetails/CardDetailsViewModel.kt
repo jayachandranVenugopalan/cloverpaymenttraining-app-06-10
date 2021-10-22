@@ -22,14 +22,14 @@ class CardDetailsViewModel: BaseViewModel() {
 private lateinit var binding: FragmentCustomerCardDetailsBinding
 private lateinit var requireContext: Context
     private lateinit var  viewModel:MainViewModel
-private var cardDetailsInterface: CardDetailsInterface?=null
-fun callwebView(binding: FragmentCustomerCardDetailsBinding, requireContext: Context) {
-   this.binding=binding
-    this.requireContext=requireContext
+
+   fun callwebView(binding: FragmentCustomerCardDetailsBinding, requireContext: Context) {
+         this.binding=binding
+         this.requireContext=requireContext
     binding.webView.apply {
-        settings.javaScriptEnabled=true
-        addJavascriptInterface(WebAppInterFace(requireContext),"Android")
-        webViewClient = MyWebViewClient(requireContext)
+          settings.javaScriptEnabled=true
+          addJavascriptInterface(WebAppInterFace(requireContext),"Android")
+          webViewClient = MyWebViewClient(requireContext)
         loadUrl(Constant.BASE_URL_WEBVIEW)
     }
 }

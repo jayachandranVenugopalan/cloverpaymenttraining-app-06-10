@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBindingKtx
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,31 +18,36 @@ import com.jcclover.jcel.customerlist.customviewmodel.MainViewModelFactory
 import com.jcclover.jcel.repository.Repository
 import java.text.FieldPosition
 
-abstract class BaseFragment <  VM:BaseViewModel,B: ViewBinding,D:BaseDialogFragment>:Fragment(){
+abstract class BaseFragment <VM:BaseViewModel,B: ViewBinding>:Fragment(){
 
-    protected lateinit var binding:B
+    protected  lateinit var binding:B
     protected lateinit  var viewModel:VM
-    protected lateinit var baseDialogFragment:D
+
+  abstract fun getViewModel():Class<VM>
+
+    abstract fun getFragmentBinding(inflater: LayoutInflater,container: ViewGroup?):B
+
+
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View?{
+
         binding=getFragmentBinding(inflater,container)
         val factory=MainViewModelFactory(Repository())
         viewModel=ViewModelProvider(this,factory).get(getViewModel())
 
-        baseDialogFragment=getDialog()
 
         return binding.root
             }
 
-    abstract fun getViewModel():Class<VM>
-
-    abstract fun getFragmentBinding(inflater: LayoutInflater,container: ViewGroup?):B
-
-    abstract fun getDialog(): D
-
-
+fun showToast(message:String){
+    Toast.makeText(context, "$message", Toast.LENGTH_SHORT).show()
+}
 }

@@ -19,6 +19,7 @@ import com.jcclover.databinding.ActivityMainBinding
 import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity() {
+    //base
     private var pressedTime: Long = 0
     lateinit var navController:NavController
     lateinit var binding:ActivityMainBinding

@@ -1,24 +1,26 @@
 package com.jcclover.jcel.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.jcclover.R
 import com.jcclover.databinding.FragmentLoginBinding
 import com.jcclover.jcel.LoginViewModel
-import com.jcclover.jcel.base.BaseDialogFragment
 import com.jcclover.jcel.base.BaseFragment
 
 
-class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding,BaseDialogFragment> (){
+class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding> (){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
          viewModel.logincall(binding,requireContext())
         binding.SubmitBtn.setOnClickListener{
-           
+           viewModel.toastMessage.observe(viewLifecycleOwner, Observer {
+         showToast(it)
+           })
            var action=LoginFragmentDirections.actionLoginFragmentToCustomerList()
            findNavController().navigate(action)
         }
@@ -31,5 +33,5 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding,BaseDialo
         container: ViewGroup?,
     )= FragmentLoginBinding.inflate(inflater,container,false)
 
-    override fun getDialog()=BaseDialogFragment()
+
 }

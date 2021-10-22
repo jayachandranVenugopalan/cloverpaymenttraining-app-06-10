@@ -32,7 +32,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCardDetailsBinding,BaseDialogFragment>(),
+class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCardDetailsBinding>(),
+
+
     CardDetailsInterface {
     var scope= CoroutineScope(CoroutineName("MyScope") + Dispatchers.Main)
    private lateinit var  viewModelMain:MainViewModel
@@ -135,20 +137,7 @@ class CustomerCardDetails : BaseFragment<CardDetailsViewModel,FragmentCustomerCa
         createChanges(paymentToken!!,args.amount,args.position)
     }
 
-    override fun getDialog()= BaseDialogFragment()
 
-//    val dialogresponse: BroadcastReceiver =object : BroadcastReceiver(){
-//
-//        override fun onReceive(ctx: Context?, intent: Intent?) {
-//            scope.launch{
-//                var paymentToken:String?=intent!!.getStringExtra("token")
-//                val action =
-//                    CustomerListDirections.actionCustomerListToCustomerCardDetails(amount!!.toInt(),
-//                        position!!)
-//                findNavController().navigate(action)
-//
-//            }
-//        }
-//    }
+
 
 }

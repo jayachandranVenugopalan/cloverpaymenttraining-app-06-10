@@ -44,7 +44,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
 
 
-class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBinding,BaseDialogFragment>(),OnServiceClickListner ,BaseInterface{
+class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBinding>(),OnServiceClickListner ,BaseInterface{
     private lateinit var rcCusList: RecyclerView
     private lateinit var paymentOrder: PaymentOrder
     private lateinit var adaptor: CustomerListAdaptor
@@ -63,7 +63,7 @@ class CustomerList : BaseFragment<CustomerListViewModel,FragmentCustomerListBind
         container: ViewGroup?,
     ) = FragmentCustomerListBinding.inflate(inflater, container, false)
 
-    override fun getDialog(): BaseDialogFragment = BaseDialogFragment ()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
